@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Saldo & Escrow - YokBarter</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary: #0f2a56;
+      --primary-light: #4a86e8;
+      --secondary: #ff9900;
+      --success: #28a745;
+      --danger: #dc3545;
+      --warning: #ffc107;
+      --gray-100: #f8f9fa;
+      --gray-200: #e9ecef;
+      --gray-300: #dee2e6;
+      --gray-400: #ced4da;
+      --white: #ffffff;
+      --black: #000000;
+      --transition: all 0.3s ease;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', 'Segoe UI', 'Roboto', sans-serif;
+      background-color: var(--gray-100);
+      color: #333;
+      line-height: 1.6;
+    }
+
+    /* ========== HEADER ========== */
+    .header-container {
+      background: linear-gradient(135deg, var(--primary), #0a1f3d);
+      color: white;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .header-top {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo-icon {
+      width: 48px;
+      height: 48px;
+      background: linear-gradient(135deg, var(--primary-light), #2a6bd1);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      color: white;
+      font-size: 20px;
+    }
+
+    .logo-text {
+      font-size: 24px;
+      font-weight: 700;
+      background: linear-gradient(135deg, #ffffff, #e0e7f0);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .search-container {
+      flex: 1;
+      max-width: 600px;
+      margin: 0 30px;
+      position: relative;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 12px 16px 12px 40px;
+      border: none;
+      border-radius: 50px;
+      background: rgba(255, 255, 255, 0.15);
+      color: white;
+      font-size: 15px;
+      backdrop-filter: blur(10px);
+    }
+
+    .search-input::placeholder {
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    .user-profile {
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(135deg, var(--primary-light), #2a6bd1);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .main-nav {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      border-radius: 12px;
+      margin-top: 16px;
+      padding: 8px 0;
+    }
+
+    .main-nav ul {
+      list-style: none;
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      padding: 0 20px;
+    }
+
+    .main-nav li a {
+      color: rgba(255, 255, 255, 0.9);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 14px;
+      padding: 8px 12px;
+      border-radius: 8px;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .main-nav li a:hover {
+      color: white;
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .main-nav li a.active {
+      color: white;
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    /* ========== SALDO CONTAINER ========== */
+    .saldo-container {
+      max-width: 1200px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    .saldo-header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .saldo-header h2 {
+      font-size: 32px;
+      font-weight: 700;
+      color: var(--primary);
+      display: inline-block;
+      position: relative;
+    }
+
+    .saldo-header h2::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 4px;
+      background: linear-gradient(90deg, var(--primary-light), var(--secondary));
+      border-radius: 2px;
+    }
+
+    /* ========== SALDO OVERVIEW ========== */
+    .saldo-overview {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px;
+      margin-bottom: 40px;
+    }
+
+    .saldo-card {
+      background: white;
+      border-radius: 16px;
+      padding: 24px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+      transition: var(--transition);
+    }
+
+    .saldo-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 25px rgba(0, 0, 0, 0.12);
+    }
+
+    .saldo-title {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--gray-600);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .saldo-amount {
+      font-size: 32px;
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+
+    .saldo-primary {
+      color: var(--primary-light);
+    }
+
+    .saldo-warning {
+      color: var(--warning);
+    }
+
+    .saldo-success {
+      color: var(--success);
+    }
+
+    .saldo-actions {
+      display: flex;
+      gap: 12px;
+    }
+
+    .btn-saldo {
+      padding: 10px 16px;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+    }
+
+    .btn-tambah {
+      background: var(--primary-light);
+      color: white;
+    }
+
+    .btn-tarik {
+      background: var(--gray-200);
+      color: var(--gray-800);
+    }
+
+    .btn-tambah:hover {
+      background: #2a6bd1;
+    }
+
+    .btn-tarik:hover {
+      background: var(--gray-300);
+    }
+
+    /* ========== ESCROW SECTION ========== */
+    .escrow-section {
+      background: white;
+      border-radius: 16px;
+      padding: 24px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+      margin-bottom: 40px;
+    }
+
+    .escrow-header {
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--gray-200);
+    }
+
+    .escrow-header h3 {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .escrow-info {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      margin-bottom: 24px;
+    }
+
+    .escrow-item {
+      background: var(--gray-100);
+      padding: 16px;
+      border-radius: 12px;
+    }
+
+    .escrow-label {
+      font-size: 14px;
+      color: var(--gray-600);
+      margin-bottom: 8px;
+    }
+
+    .escrow-value {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    /* ========== TRANSAKSI HISTORY ========== */
+    .history-section {
+      background: white;
+      border-radius: 16px;
+      padding: 24px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    }
+
+    .history-header {
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--gray-200);
+    }
+
+    .history-header h3 {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .history-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .history-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px;
+      border-radius: 12px;
+      background: var(--gray-100);
+    }
+
+    .history-desc {
+      font-weight: 600;
+      color: var(--gray-800);
+    }
+
+    .history-amount {
+      font-weight: 700;
+      font-size: 18px;
+    }
+
+    .history-credit {
+      color: var(--success);
+    }
+
+    .history-debit {
+      color: var(--danger);
+    }
+
+    .history-date {
+      font-size: 14px;
+      color: var(--gray-600);
+      margin-top: 4px;
+    }
+
+    /* ========== MODAL ========== */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+
+    .modal-content {
+      background: white;
+      border-radius: 16px;
+      width: 90%;
+      max-width: 500px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+      overflow: hidden;
+    }
+
+    .modal-header {
+      padding: 20px;
+      border-bottom: 1px solid var(--gray-200);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .modal-header h3 {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    .modal-close {
+      background: none;
+      border: none;
+      font-size: 24px;
+      cursor: pointer;
+      color: var(--gray-500);
+    }
+
+    .modal-body {
+      padding: 24px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: var(--gray-800);
+    }
+
+    .form-group input,
+    .form-group select {
+      width: 100%;
+      padding: 12px 16px;
+      border: 2px solid var(--gray-200);
+      border-radius: 10px;
+      font-size: 16px;
+      transition: var(--transition);
+    }
+
+    .form-group input:focus,
+    .form-group select:focus {
+      outline: none;
+      border-color: var(--primary-light);
+      box-shadow: 0 0 0 3px rgba(74, 134, 232, 0.2);
+    }
+
+    .modal-footer {
+      padding: 20px;
+      text-align: right;
+      border-top: 1px solid var(--gray-200);
+    }
+
+    .btn-modal {
+      padding: 12px 24px;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+      font-size: 16px;
+    }
+
+    .btn-confirm {
+      background: var(--primary-light);
+      color: white;
+    }
+
+    .btn-cancel {
+      background: var(--gray-200);
+      color: var(--gray-800);
+      margin-right: 12px;
+    }
+
+    .btn-confirm:hover {
+      background: #2a6bd1;
+    }
+
+    .btn-cancel:hover {
+      background: var(--gray-300);
+    }
+
+    /* ========== RESPONSIVE ========== */
+    @media (max-width: 768px) {
+      .header-top {
+        flex-direction: column;
+        gap: 16px;
+      }
+      
+      .search-container {
+        margin: 0;
+        max-width: 100%;
+      }
+      
+      .saldo-overview {
+        grid-template-columns: 1fr;
+      }
+      
+      .escrow-info {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- PROTEKSI LOGIN -->
+<script>
+if (localStorage.getItem("isLoggedIn") !== "true") {
+  window.location.href = "login.html";
+}
+
+const currentUser = localStorage.getItem("currentUser");
+if (currentUser) {
+  document.getElementById("profil-initial").innerText = currentUser.charAt(0).toUpperCase();
+}
+</script>
+
+<header class="header-container">
+  <div class="header-top">
+    <div class="logo-container">
+      <div class="logo-icon">YB</div>
+      <div class="logo-text">YokBarter</div>
+    </div>
+    
+    <div class="search-container">
+      <input type="text" class="search-input" placeholder="Cari barang...">
+    </div>
+    
+    <div class="user-profile" id="profil-initial">U</div>
+  </div>
+
+  <nav class="main-nav">
+    <ul>
+      <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+      <li><a href="index.html#filter"><i class="fas fa-search"></i> Jelajah</a></li>
+      <li><a href="index.html#katalog"><i class="fas fa-exchange-alt"></i> Ajukan Barter</a></li>
+      <li><a href="chat.html"><i class="fas fa-comments"></i> Chat</a></li>
+      <li><a href="transaksi.html"><i class="fas fa-shopping-cart"></i> Transaksi</a></li>
+      <li><a href="saldo.html" class="active"><i class="fas fa-wallet"></i> Saldo & Escrow</a></li>
+    </ul>
+  </nav>
+</header>
+
+<div class="saldo-container">
+  <div class="saldo-header">
+    <h2>Saldo & Escrow</h2>
+  </div>
+  
+  <!-- Saldo Overview -->
+  <div class="saldo-overview">
+    <div class="saldo-card">
+      <div class="saldo-title">
+        <i class="fas fa-wallet"></i> Saldo Saya
+      </div>
+      <div class="saldo-amount saldo-primary" id="saldo-saya">Rp 2.500.000</div>
+      <div class="saldo-actions">
+        <button class="btn-saldo btn-tambah" onclick="bukaModal('tambah')">
+          <i class="fas fa-plus"></i> Tambah Saldo
+        </button>
+        <button class="btn-saldo btn-tarik" onclick="bukaModal('tarik')">
+          <i class="fas fa-arrow-down"></i> Tarik Saldo
+        </button>
+      </div>
+    </div>
+    
+    <div class="saldo-card">
+      <div class="saldo-title">
+        <i class="fas fa-lock"></i> Dana Escrow
+      </div>
+      <div class="saldo-amount saldo-warning" id="dana-escrow">Rp 1.200.000</div>
+      <p style="color: var(--gray-600); font-size: 14px; margin-top: 12px;">
+        Dana yang sedang dalam proses transaksi
+      </p>
+    </div>
+    
+    <div class="saldo-card">
+      <div class="saldo-title">
+        <i class="fas fa-check-circle"></i> Transaksi Berhasil
+      </div>
+      <div class="saldo-amount saldo-success" id="transaksi-berhasil">Rp 8.700.000</div>
+      <p style="color: var(--gray-600); font-size: 14px; margin-top: 12px;">
+        Total transaksi yang telah selesai
+      </p>
+    </div>
+  </div>
+  
+  <!-- Escrow Section -->
+  <div class="escrow-section">
+    <div class="escrow-header">
+      <h3><i class="fas fa-lock"></i> Informasi Escrow</h3>
+    </div>
+    
+    <div class="escrow-info">
+      <div class="escrow-item">
+        <div class="escrow-label">Transaksi Aktif</div>
+        <div class="escrow-value">2</div>
+      </div>
+      
+      <div class="escrow-item">
+        <div class="escrow-label">Dana Terproteksi</div>
+        <div class="escrow-value">Rp 1.200.000</div>
+      </div>
+      
+      <div class="escrow-item">
+        <div class="escrow-label">Keamanan</div>
+        <div class="escrow-value">100%</div>
+      </div>
+    </div>
+    
+    <p style="color: var(--gray-700); line-height: 1.6;">
+      <strong>Sistem Escrow YokBarter</strong> melindungi kedua belah pihak dalam transaksi barter. 
+      Dana akan ditahan sampai kedua pihak mengkonfirmasi bahwa barang telah diterima dengan baik.
+    </p>
+  </div>
+  
+  <!-- History Section -->
+  <div class="history-section">
+    <div class="history-header">
+      <h3><i class="fas fa-history"></i> Riwayat Transaksi</h3>
+    </div>
+    
+    <div class="history-list">
+      <div class="history-item">
+        <div>
+          <div class="history-desc">Penambahan Saldo</div>
+          <div class="history-date">01 Feb 2026</div>
+        </div>
+        <div class="history-amount history-credit">+ Rp 1.000.000</div>
+      </div>
+      
+      <div class="history-item">
+        <div>
+          <div class="history-desc">Transaksi iPhone 12 Pro</div>
+          <div class="history-date">30 Jan 2026</div>
+        </div>
+        <div class="history-amount history-debit">- Rp 8.000.000</div>
+      </div>
+      
+      <div class="history-item">
+        <div>
+          <div class="history-desc">Transaksi PlayStation 5</div>
+          <div class="history-date">28 Jan 2026</div>
+        </div>
+        <div class="history-amount history-credit">+ Rp 7.500.000</div>
+      </div>
+      
+      <div class="history-item">
+        <div>
+          <div class="history-desc">Penarikan Saldo</div>
+          <div class="history-date">25 Jan 2026</div>
+        </div>
+        <div class="history-amount history-debit">- Rp 500.000</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// Data saldo awal
+let saldoData = JSON.parse(localStorage.getItem('saldoData')) || {
+  saldoSaya: 2500000,
+  danaEscrow: 1200000,
+  transaksiBerhasil: 8700000,
+  riwayat: [
+    { jenis: 'credit', deskripsi: 'Penambahan Saldo', jumlah: 1000000, tanggal: '2026-02-01' },
+    { jenis: 'debit', deskripsi: 'Transaksi iPhone 12 Pro', jumlah: 8000000, tanggal: '2026-01-30' },
+    { jenis: 'credit', deskripsi: 'Transaksi PlayStation 5', jumlah: 7500000, tanggal: '2026-01-28' },
+    { jenis: 'debit', deskripsi: 'Penarikan Saldo', jumlah: 500000, tanggal: '2026-01-25' }
+  ]
+};
+
+// Format Rupiah
+function formatRupiah(angka) {
+  return new Intl.NumberFormat('id-ID', {
+    style: 'currency',
+    currency: 'IDR',
+    minimumFractionDigits: 0
+  }).format(angka);
+}
+
+// Update tampilan saldo
+function updateSaldoDisplay() {
+  document.getElementById('saldo-saya').textContent = formatRupiah(saldoData.saldoSaya);
+  document.getElementById('dana-escrow').textContent = formatRupiah(saldoData.danaEscrow);
+  document.getElementById('transaksi-berhasil').textContent = formatRupiah(saldoData.transaksiBerhasil);
+}
+
+// Buka modal
+function bukaModal(jenis) {
+  const modalHTML = `
+    <div class="modal-overlay" onclick="tutupModal(event)">
+      <div class="modal-content" onclick="stopPropagation(event)">
+        <div class="modal-header">
+          <h3>${jenis === 'tambah' ? 'Tambah Saldo' : 'Tarik Saldo'}</h3>
+          <button class="modal-close" onclick="tutupModal()">×</button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="jumlah">${jenis === 'tambah' ? 'Jumlah yang ingin ditambahkan' : 'Jumlah yang ingin ditarik'}</label>
+            <input type="number" id="jumlah" placeholder="Masukkan jumlah" min="10000">
+          </div>
+          <div class="form-group">
+            <label for="metode">Metode Pembayaran</label>
+            <select id="metode">
+              <option value="bank">Transfer Bank</option>
+              <option value="ewallet">E-Wallet</option>
+            </select>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn-modal btn-cancel" onclick="tutupModal()">Batal</button>
+          <button class="btn-modal btn-confirm" onclick="prosesSaldo('${jenis}')">
+            ${jenis === 'tambah' ? 'Tambah Saldo' : 'Tarik Saldo'}
+          </button>
+        </div>
+      </div>
+    </div>
+  `;
+  
+  document.body.insertAdjacentHTML('beforeend', modalHTML);
+}
+
+// Proses saldo - VERSI FIX
+function prosesSaldo(jenis) {
+  const jumlahInput = document.getElementById('jumlah');
+  const jumlah = parseInt(jumlahInput.value);
+  
+  if (!jumlah || jumlah < 10000) {
+    alert('Jumlah minimal Rp 10.000');
+    return;
+  }
+  
+  if (jenis === 'tarik' && jumlah > saldoData.saldoSaya) {
+    alert('Saldo tidak mencukupi');
+    return;
+  }
+  
+  // Simulasi proses
+  if (jenis === 'tambah') {
+    saldoData.saldoSaya += jumlah;
+    saldoData.riwayat.unshift({
+      jenis: 'credit',
+      deskripsi: 'Penambahan Saldo',
+      jumlah: jumlah,
+      tanggal: new Date().toISOString().split('T')[0]
+    });
+  } else {
+    saldoData.saldoSaya -= jumlah;
+    saldoData.riwayat.unshift({
+      jenis: 'debit',
+      deskripsi: 'Penarikan Saldo',
+      jumlah: jumlah,
+      tanggal: new Date().toISOString().split('T')[0]
+    });
+  }
+  
+  // Simpan ke localStorage
+  localStorage.setItem('saldoData', JSON.stringify(saldoData));
+  
+  // Update tampilan
+  updateSaldoDisplay();
+  
+  // Tutup modal dan beri notifikasi
+  tutupModal();
+  alert(`${jenis === 'tambah' ? 'Penambahan' : 'Penarikan'} saldo berhasil!`);
+}
+
+// Tutup modal
+function tutupModal(event) {
+  if (event) {
+    event.stopPropagation();
+  }
+  const modal = document.querySelector('.modal-overlay');
+  if (modal) {
+    modal.remove();
+  }
+}
+
+// Stop propagation untuk modal content
+function stopPropagation(event) {
+  event.stopPropagation();
+}
+
+// Logout
+function logout() {
+  localStorage.removeItem("isLoggedIn");
+  localStorage.removeItem("currentUser");
+  window.location.href = "login.html";
+}
+
+// Inisialisasi
+document.addEventListener('DOMContentLoaded', function() {
+  updateSaldoDisplay();
+});
+</script>
+
+</body>
+</html>

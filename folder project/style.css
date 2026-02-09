@@ -1,0 +1,451 @@
+/* ========== GLOBAL ========== */
+body {
+  font-family: 'Inter', 'Segoe UI', 'Roboto', sans-serif;
+  background: #f3f5f9;
+  margin: 0;
+  color: #333;
+  line-height: 1.6;
+}
+
+/* ========== LOGO / NAMA APLIKASI ========== */
+.app-name {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 700;
+  color: white;
+  font-family: 'Arial', sans-serif;
+  letter-spacing: -0.5px;
+}
+
+h2, h3 {
+  text-align: center;
+  margin: 30px 0 20px 0;
+  color: #0f2a56;
+}
+
+/* ========== HEADER ========== */
+header {
+  background: #0f2a56;
+  color: white;
+}
+
+.header-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 30px;
+  background: #0f2a56;
+  color: white;
+  min-height: 80px;
+}
+
+.search-container {
+  display: flex;
+  flex: 1;
+  max-width: 600px;
+  margin: 0 20px;
+}
+
+.search-input {
+  flex: 1;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 20px;
+  font-size: 14px;
+  outline: none;
+}
+
+.search-btn {
+  padding: 10px 15px;
+  background: transparent;
+  border: none;
+  color: #999;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.user-profile {
+  width: 32px;
+  height: 32px;
+  background: #4a86e8;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  color: white;
+  font-size: 14px;
+}
+
+.main-nav {
+  background: #0f2a56;
+  padding: 10px 0;
+}
+
+.main-nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  gap: 25px;
+}
+
+.main-nav li a {
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+  padding: 5px 0;
+  position: relative;
+  font-size: 14px;
+}
+
+.main-nav li a.active::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 20px;
+  height: 2px;
+  background: white;
+}
+
+.main-nav li a:hover {
+  opacity: 0.8;
+}
+
+/* ========== FILTER SECTION ========== */
+.filter-section {
+  max-width: 1200px;
+  margin: 30px auto;
+  padding: 20px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+.filter-section h3 {
+  margin: 0 0 15px 0;
+  color: #0f2a56;
+  font-size: 18px;
+  font-weight: 600;
+  text-align: left;
+}
+
+.filters {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 15px;
+}
+
+.filter-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 500;
+  color: #555;
+  font-size: 14px;
+}
+
+.filter-group select,
+.filter-group input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.filter-group select:focus,
+.filter-group input:focus {
+  outline: none;
+  border-color: #4a86e8;
+}
+
+/* ========== KATALOG GRID ========== */
+.katalog {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 25px;
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* ========== PRODUK CARD ========== */
+.produk {
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  transition: transform 0.3s, box-shadow 0.3s;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.produk:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+}
+
+.product-image {
+  position: relative;
+  overflow: hidden;
+}
+
+.product-image img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 8px 8px 0 0;
+}
+
+.badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: #ff9900;
+  color: white;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+  z-index: 2;
+}
+
+.product-details {
+  padding: 15px;
+  flex-grow: 1;
+}
+
+.product-details h4 {
+  margin: 0 0 8px 0;
+  font-size: 16px;
+  color: #333;
+  font-weight: 600;
+}
+
+.price {
+  font-weight: bold;
+  color: #4a86e8; /* Biru seperti Figma */
+  font-size: 18px;
+  margin: 5px 0;
+}
+
+.location {
+  color: #666;
+  font-size: 14px;
+  margin: 5px 0;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.rating {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 10px;
+  font-size: 14px;
+  color: #ffc107; /* Kuning seperti Figma */
+}
+
+.rating span:first-child {
+  color: #ffc107;
+}
+
+/* Tombol Barter */
+.produk button {
+  margin: 10px 15px 15px;
+  padding: 10px;
+  border: none;
+  border-radius: 6px;
+  background: #4a86e8;
+  color: white;
+  cursor: pointer;
+  font-weight: 500;
+  width: calc(100% - 30px);
+  transition: background 0.3s;
+  font-size: 14px;
+}
+
+.produk button:hover {
+  background: #3a6bc7;
+}
+
+/* ========== RESPONSIVE DESIGN ========== */
+
+/* Tablet View (768px - 1024px) */
+@media (max-width: 1024px) {
+  .app-name {
+    font-size: 24px;
+  }
+  
+  .header-top {
+    padding: 15px 20px;
+    min-height: 70px;
+  }
+  
+  .search-input {
+    padding: 8px 12px;
+    font-size: 13px;
+  }
+  
+  .user-profile {
+    width: 28px;
+    height: 28px;
+    font-size: 12px;
+  }
+  
+  .main-nav ul {
+    gap: 15px;
+  }
+  
+  .main-nav li a {
+    font-size: 13px;
+  }
+  
+  .filters {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  }
+  
+  .katalog {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+    padding: 15px;
+  }
+  
+  .product-image img {
+    height: 180px;
+  }
+  
+  .product-details h4 {
+    font-size: 15px;
+  }
+}
+
+/* Mobile View (480px - 767px) */
+@media (max-width: 767px) {
+  .app-name {
+    font-size: 22px;
+  }
+  
+  .header-top {
+    flex-direction: column;
+    gap: 15px;
+    padding: 15px;
+    min-height: auto;
+  }
+  
+  .search-container {
+    width: 100%;
+    max-width: none;
+    margin: 0;
+  }
+  
+  .main-nav ul {
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 10px;
+    padding: 0 10px;
+  }
+  
+  .main-nav li a {
+    font-size: 12px;
+    padding: 8px 12px;
+    border-radius: 6px;
+  }
+  
+  .main-nav li a.active::after {
+    display: none;
+  }
+  
+  .filters {
+    grid-template-columns: 1fr;
+  }
+  
+  .katalog {
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 15px;
+    padding: 10px;
+  }
+  
+  .product-image img {
+    height: 160px;
+  }
+  
+  .product-details h4 {
+    font-size: 14px;
+  }
+  
+  .price {
+    font-size: 16px;
+  }
+  
+  .produk button {
+    padding: 8px;
+    font-size: 13px;
+  }
+}
+
+/* Small Mobile (max 479px) */
+@media (max-width: 479px) {
+  .app-name {
+    font-size: 20px;
+  }
+  
+  body {
+    font-size: 14px;
+  }
+  
+  h2, h3 {
+    font-size: 18px;
+    margin: 20px 0 15px 0;
+  }
+  
+  .header-top {
+    padding: 10px;
+  }
+  
+  .search-input {
+    padding: 6px 10px;
+    font-size: 12px;
+  }
+  
+  .user-profile {
+    width: 24px;
+    height: 24px;
+    font-size: 11px;
+  }
+  
+  .katalog {
+    grid-template-columns: 1fr;
+    padding: 10px;
+  }
+  
+  .product-image img {
+    height: 140px;
+  }
+  
+  .product-details h4 {
+    font-size: 13px;
+  }
+  
+  .price {
+    font-size: 15px;
+  }
+  
+  .location {
+    font-size: 12px;
+  }
+  
+  .rating {
+    font-size: 12px;
+  }
+  
+  .produk button {
+    padding: 6px;
+    font-size: 12px;
+  }
+}
