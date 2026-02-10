@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Dispute Center - YokBarter</title>
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #f3f5f9;
+      margin: 0;
+      padding: 20px;
+    }
+    
+    .dispute-container {
+      max-width: 800px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 12px;
+      padding: 30px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    }
+    
+    .form-group {
+      margin-bottom: 20px;
+    }
+    
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 500;
+      color: #333;
+    }
+    
+    .form-group select,
+    .form-group textarea,
+    .form-group input[type="file"] {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      font-size: 14px;
+    }
+    
+    .btn-submit {
+      width: 100%;
+      padding: 12px;
+      background: #4a86e8;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+    
+    .btn-submit:hover {
+      background: #3a6bc7;
+    }
+    
+    .transaction-list {
+      margin-top: 20px;
+    }
+    
+    .transaction-item {
+      padding: 15px;
+      border: 1px solid #eee;
+      border-radius: 8px;
+      margin-bottom: 15px;
+      cursor: pointer;
+    }
+    
+    .transaction-item:hover {
+      background: #f8f9fa;
+    }
+  </style>
+</head>
+<body>
+
+<div class="dispute-container">
+  <h2 style="text-align: center; margin-bottom: 20px;">Pusat Sengketa</h2>
+  
+  <p style="text-align: center; color: #666; margin-bottom: 30px;">
+    Laporkan masalah transaksi yang belum terselesaikan
+  </p>
+  
+  <div class="form-group">
+    <label>Pilih Transaksi</label>
+    <select id="transaction-select">
+      <option value="">Pilih transaksi yang bermasalah</option>
+      <option value="BT-2026-001">Transaksi #BT-2026-001 (iPhone 12 Pro ↔ MacBook Pro)</option>
+      <option value="BT-2026-002">Transaksi #BT-2026-002 (PlayStation 5 ↔ Sepeda Polygon)</option>
+    </select>
+  </div>
+  
+  <div class="form-group">
+    <label>Jenis Masalah</label>
+    <select id="issue-type">
+      <option value="">Pilih jenis masalah</option>
+      <option value=" barang_tidak_sesuai">Barang tidak sesuai deskripsi</option>
+      <option value="tidak_menerima">Tidak menerima barang</option>
+      <option value="pembayaran_tidak_sesuai">Pembayaran tidak sesuai</option>
+    </select>
+  </div>
+  
+  <div class="form-group">
+    <label>Deskripsi Masalah</label>
+    <textarea id="issue-description" rows="5" placeholder="Jelaskan masalah secara detail..."></textarea>
+  </div>
+  
+  <div class="form-group">
+    <label>Upload Bukti (gambar, video, chat)</label>
+    <input type="file" id="evidence-upload" accept="image/*,video/*">
+  </div>
+  
+  <button class="btn-submit" onclick="laporSengketa()">Laporkan Sengketa</button>
+  
+  <div class="transaction-list">
+    <h3 style="margin: 25px 0 15px 0;">Transaksi yang Sedang Diproses</h3>
+    
+    <div class="transaction-item">
+      <div style="display: flex; justify-content: space-between;">
+        <div>
+          <h4>Transaksi #BT-2026-001</h4>
+          <p>iPhone 12 Pro ↔ MacBook Pro</p>
+        </div>
+        <span style="background: #ffe6e6; padding: 5px 10px; border-radius: 5px; color: #c0392b;">Diproses</span>
+      </div>
+      <p style="color: #666; font-size: 14px; margin-top: 8px;">Status: Menunggu respon admin</p>
+    </div>
+    
+    <div class="transaction-item">
+      <div style="display: flex; justify-content: space-between;">
+        <div>
+          <h4>Transaksi #BT-2026-002</h4>
+          <p>PlayStation 5 ↔ Sepeda Polygon</p>
+        </div>
+        <span style="background: #e6f7ff; padding: 5px 10px; border-radius: 5px; color: #2980b9;">Baru</span>
+      </div>
+      <p style="color: #666; font-size: 14px; margin-top: 8px;">Status: Belum diproses</p>
+    </div>
+  </div>
+</div>
+
+<script>
+function laporSengketa() {
+  const transaction = document.getElementById('transaction-select').value;
+  const issueType = document.getElementById('issue-type').value;
+  const description = document.getElementById('issue-description').value;
+  
+  if (!transaction || !issueType || !description) {
+    alert('Harap lengkapi semua field!');
+    return;
+  }
+  
+  // Simpan ke localStorage
+  const dispute = {
+    id: 'DS-' + Date.now().toString(36),
+    transaction: transaction,
+    issueType: issueType,
+    description: description,
+    status: 'pending',
+    date: new Date().toISOString()
+  };
+  
+  let disputes = JSON.parse(localStorage.getItem('disputes')) || [];
+  disputes.push(dispute);
+  localStorage.setItem('disputes', JSON.stringify(disputes));
+  
+  alert('Sengketa berhasil dilaporkan! Admin akan segera menanggapi.');
+  window.location.href = 'transaksi.html';
+}
+</script>
+
+</body>
+</html>
