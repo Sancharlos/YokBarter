@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Login - YokBarter</title>
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #0f2a56, #4a86e8);
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+    
+    .login-container {
+      background: white;
+      padding: 40px;
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+      width: 400px;
+      max-width: 90%;
+    }
+    
+    .logo {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    
+    .logo-icon {
+      width: 60px;
+      height: 60px;
+      background: #4a86e8;
+      border-radius: 12px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      color: white;
+      font-size: 24px;
+      margin-bottom: 10px;
+    }
+    
+    .logo-text {
+      font-size: 28px;
+      font-weight: 700;
+      color: #0f2a56;
+    }
+    
+    .form-group {
+      margin-bottom: 20px;
+    }
+    
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 500;
+      color: #333;
+    }
+    
+    .form-group input {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      font-size: 14px;
+    }
+    
+    .form-group input:focus {
+      outline: none;
+      border-color: #4a86e8;
+    }
+    
+    .btn-login {
+      width: 100%;
+      padding: 12px;
+      background: #4a86e8;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+    
+    .btn-login:hover {
+      background: #3a6bc7;
+    }
+    
+    .register-link {
+      text-align: center;
+      margin-top: 20px;
+      color: #666;
+    }
+    
+    .register-link a {
+      color: #4a86e8;
+      text-decoration: none;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+<div class="login-container">
+  <div class="logo">
+    <div class="logo-icon">YB</div>
+    <div class="logo-text">YokBarter</div>
+  </div>
+  
+  <h2 style="text-align: center; margin-bottom: 30px;">Login</h2>
+  
+  <form id="loginForm">
+    <div class="form-group">
+      <label>Email</label>
+      <input type="email" id="email" placeholder="contoh@email.com" required>
+    </div>
+    
+    <div class="form-group">
+      <label>Password</label>
+      <input type="password" id="password" placeholder="••••••••" required>
+    </div>
+    
+    <button type="submit" class="btn-login">Login</button>
+  </form>
+  
+  <div class="register-link">
+    Belum punya akun? <a href="register.html">Daftar</a>
+  </div>
+</div>
+
+<script>
+document.getElementById('loginForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  
+  const email = document.getElementById('email').value;
+  const password = document.getElementById('password').value;
+  
+  // Simple validation (nanti pakai database)
+  if (email === 'user@test.com' && password === 'password123') {
+    localStorage.setItem('isLoggedIn', 'true');
+    localStorage.setItem('currentUser', email.split('@')[0]);
+    alert('Login berhasil!');
+    window.location.href = 'index.html';
+  } else {
+    alert('Email atau password salah!');
+  }
+});
+</script>
+
+</body>
+</html>
