@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Transaksi - YokBarter</title>
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #f3f5f9;
+      margin: 0;
+    }
+    
+    header {
+      background: #0f2a56;
+      color: white;
+      padding: 15px 30px;
+    }
+    
+    .transaction-container {
+      max-width: 1200px;
+      margin: 30px auto;
+      padding: 20px;
+    }
+    
+    .transaction-card {
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      margin-bottom: 20px;
+    }
+    
+    .transaction-header {
+      padding: 20px;
+      background: #f8f9fa;
+      border-bottom: 1px solid #eee;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .transaction-status {
+      display: flex;
+      gap: 15px;
+      margin: 20px 0;
+      padding: 0 20px;
+    }
+    
+    .status-step {
+      flex: 1;
+      text-align: center;
+      position: relative;
+    }
+    
+    .status-step::after {
+      content: '';
+      position: absolute;
+      top: 15px;
+      left: 50%;
+      width: 100%;
+      height: 2px;
+      background: #ddd;
+      z-index: 1;
+    }
+    
+    .status-step:last-child::after {
+      display: none;
+    }
+    
+    .status-step.active::after {
+      background: #4a86e8;
+    }
+    
+    .status-step.active .step-number {
+      background: #4a86e8;
+      color: white;
+    }
+    
+    .step-number {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: #eee;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 10px;
+      font-weight: bold;
+    }
+    
+    .transaction-details {
+      padding: 20px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    
+    @media (max-width: 768px) {
+      .transaction-details {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-logo">
+    <div class="logo-icon">YB</div>
+    <div class="logo-text">YokBarter</div>
+  </div>
+</header>
+
+<div class="transaction-container">
+  <h2>Transaksi Saya</h2>
+  
+  <!-- Transaksi 1 -->
+  <div class="transaction-card">
+    <div class="transaction-header">
+      <div>
+        <h3>Transaksi #BT-2026-001</h3>
+        <p>iPhone 12 Pro ↔ MacBook Pro</p>
+      </div>
+      <span style="background: #4a86e8; color: white; padding: 5px 15px; border-radius: 20px; font-weight: bold;">Barter</span>
+    </div>
+    
+    <div class="transaction-status">
+      <div class="status-step active">
+        <div class="step-number">1</div>
+        <div>Ajukan Barter</div>
+      </div>
+      <div class="status-step active">
+        <div class="step-number">2</div>
+        <div>Disetujui</div>
+      </div>
+      <div class="status-step">
+        <div class="step-number">3</div>
+        <div>Kirim Barang</div>
+        <!-- Tambahkan ini di dalam .transaction-details -->
+<div class="status-escrow" style="margin: 15px 0;"></div>
+
+<!-- Tombol konfirmasi -->
+<div style="display: flex; gap: 10px; margin-top: 15px;">
+  <button onclick="konfirmasiTerima('saya')" style="flex: 1; padding: 10px; background: #4a86e8; color: white; border: none; border-radius: 6px; cursor: pointer;">
+    ✅ Konfirmasi Terima
+  </button>
+  <button onclick="konfirmasiTerima('lawan')" style="flex: 1; padding: 10px; background: #4a86e8; color: white; border: none; border-radius: 6px; cursor: pointer;">
+    ✅ Konfirmasi Terima
+  </button>
+</div>
+<!-- Tambahkan ini di bawah .status-escrow -->
+<div class="rating-section" style="display: none; margin-top: 20px;">
+  <h3 style="margin-bottom: 15px;">Beri Rating & Ulasan</h3>
+  
+  <div style="display: flex; gap: 10px; margin-bottom: 15px;">
+    <span style="font-size: 24px; cursor: pointer;" class="rating-star" data-value="1">★</span>
+    <span style="font-size: 24px; cursor: pointer;" class="rating-star" data-value="2">★</span>
+    <span style="font-size: 24px; cursor: pointer;" class="rating-star" data-value="3">★</span>
+    <span style="font-size: 24px; cursor: pointer;" class="rating-star" data-value="4">★</span>
+    <span style="font-size: 24px; cursor: pointer;" class="rating-star" data-value="5">★</span>
+  </div>
+  
+  <textarea placeholder="Tulis ulasan..." style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 6px; height: 100px;"></textarea>
+  
+  <button onclick="simpanRating()" style="width: 100%; margin-top: 15px; padding: 12px; background: #4a86e8; color: white; border: none; border-radius: 6px; cursor: pointer;">
+    Simpan Ulasan
+  </button>
+</div>
+      </div>
+      <div class="status-step">
+        <div class="step-number">4</div>
+        <div>Konfirmasi</div>
+      </div>
+    </div>
+    
+    <div class="transaction-details">
+      <div>
+        <h4>Barang Saya</h4>
+        <p>iPhone 12 Pro 128GB Pacific Blue</p>
+        <p style="color: #4a86e8; font-weight: bold;">Rp 8.000.000</p>
+        <p>📍 Jakarta Selatan</p>
+        
+        <button style="margin-top: 15px; padding: 10px 15px; background: #4a86e8; color: white; border: none; border-radius: 6px; cursor: pointer;">
+          ✉️ Kirim Barang
+        </button>
+      </div>
+      
+      <div>
+        <h4>Barang Lawan</h4>
+        <p>MacBook Pro M1 2020 13 inch</p>
+        <p style="color: #4a86e8; font-weight: bold;">Rp 15.000.000</p>
+        <p>📍 Bandung</p>
+        
+        <button style="margin-top: 15px; padding: 10px 15px; background: #4a86e8; color: white; border: none; border-radius: 6px; cursor: pointer;">
+          ✉️ Tunggu Kirim
+        </button>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Transaksi 2 -->
+  <div class="transaction-card">
+    <div class="transaction-header">
+      <div>
+        <h3>Transaksi #BT-2026-002</h3>
+        <p>PlayStation 5 ↔ Sepeda Polygon</p>
+      </div>
+      <span style="background: #4a86e8; color: white; padding: 5px 15px; border-radius: 20px; font-weight: bold;">Barter + Uang</span>
+    </div>
+    
+    <div class="transaction-status">
+      <div class="status-step active">
+        <div class="step-number">1</div>
+        <div>Ajukan Barter</div>
+      </div>
+      <div class="status-step active">
+        <div class="step-number">2</div>
+        <div>Disetujui</div>
+      </div>
+      <div class="status-step active">
+        <div class="step-number">3</div>
+        <div>Kirim Barang</div>
+      </div>
+      <div class="status-step">
+        <div class="step-number">4</div>
+        <div>Konfirmasi</div>
+      </div>
+    </div>
+    
+    <div class="transaction-details">
+      <div>
+        <h4>Barang Saya</h4>
+        <p>PlayStation 5 + 2 Controller</p>
+        <p style="color: #4a86e8; font-weight: bold;">Rp 7.500.000</p>
+        <p>📍 Surabaya</p>
+        
+        <p style="margin-top: 15px; color: #666;">
+          <b>Escrow:</b> Rp 2.500.000 (uang tambahan)
+        </p>
+      </div>
+      
+      <div>
+        <h4>Barang Lawan</h4>
+        <p>Sepeda Polygon Xtrada 6</p>
+        <p style="color: #4a86e8; font-weight: bold;">Rp 7.500.000</p>
+        <p>📍 Yogyakarta</p>
+        
+        <p style="margin-top: 15px; color: #666;">
+          <b>Status Escrow:</b> Tunggu konfirmasi
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Tambahkan di bagian bawah transaksi.html -->
+<script>
+// Simulasi escrow system
+function konfirmasiTerima(pihak) {
+  const transaksi = document.querySelector('.transaction-card');
+  const statusEscrow = transaksi.querySelector('.status-escrow');
+  
+  // Simpan konfirmasi di localStorage
+  let konfirmasi = JSON.parse(localStorage.getItem('konfirmasi')) || {};
+  konfirmasi[`transaksi_BT-2026-001_${pihak}`] = true;
+  localStorage.setItem('konfirmasi', JSON.stringify(konfirmasi));
+  
+  // Update UI
+  if (konfirmasi[`transaksi_BT-2026-001_saya`] && konfirmasi[`transaksi_BT-2026-001_lawan`]) {
+    statusEscrow.innerHTML = `
+      <div style="background: #e6f7e6; padding: 15px; border-radius: 8px; text-align: center;">
+        <h3>✅ Escrow Dilepas</h3>
+        <p>Dana telah dikirim ke akun lawan</p>
+      </div>
+    `;
+    // Update status transaksi
+    document.querySelectorAll('.status-step').forEach((step, i) => {
+      if (i === 3) step.classList.add('active');
+    });
+  }
+}
+
+// Inisialisasi status escrow
+document.addEventListener('DOMContentLoaded', function() {
+  const statusEscrow = document.querySelector('.status-escrow');
+  
+  // Cek konfirmasi dari localStorage
+  const konfirmasi = JSON.parse(localStorage.getItem('konfirmasi')) || {};
+  const transaksi1Saya = konfirmasi['transaksi_BT-2026-001_saya'];
+  const transaksi1Lawan = konfirmasi['transaksi_BT-2026-001_lawan'];
+  
+  if (transaksi1Saya && transaksi1Lawan) {
+    statusEscrow.innerHTML = `
+      <div style="background: #e6f7e6; padding: 15px; border-radius: 8px; text-align: center;">
+        <h3>✅ Escrow Dilepas</h3>
+        <p>Dana telah dikirim ke akun lawan</p>
+      </div>
+    `;
+    // Update status transaksi
+    document.querySelectorAll('.status-step').forEach((step, i) => {
+      if (i === 3) step.classList.add('active');
+    });
+  } else {
+    statusEscrow.innerHTML = `
+      <div style="background: #fff8e6; padding: 15px; border-radius: 8px;">
+        <p><b>Escrow Status:</b> Dana terkunci di sistem</p>
+        <p>• Tunggu konfirmasi penerimaan barang</p>
+        <p>• Jika tidak dikonfirmasi dalam 3 hari, akan otomatis dibatalkan</p>
+      </div>
+    `;
+  }
+});
+// Inisialisasi rating
+document.addEventListener('DOMContentLoaded', function() {
+  const ratingSection = document.querySelector('.rating-section');
+  const statusEscrow = document.querySelector('.status-escrow');
+  
+  // Cek apakah transaksi selesai
+  const konfirmasi = JSON.parse(localStorage.getItem('konfirmasi')) || {};
+  if (konfirmasi['transaksi_BT-2026-001_saya'] && konfirmasi['transaksi_BT-2026-001_lawan']) {
+    ratingSection.style.display = 'block';
+    statusEscrow.innerHTML += `
+      <div style="background: #e6f7e6; padding: 10px; border-radius: 6px; margin-top: 10px; text-align: center;">
+        <p>Terima kasih telah menyelesaikan transaksi!</p>
+        <p>Silakan beri rating untuk pengalaman bertransaksi</p>
+      </div>
+    `;
+  }
+  
+  // Rating stars
+  document.querySelectorAll('.rating-star').forEach(star => {
+    star.addEventListener('click', function() {
+      const value = this.getAttribute('data-value');
+      document.querySelectorAll('.rating-star').forEach(s => {
+        s.style.color = s.getAttribute('data-value') <= value ? '#ffc107' : '#ddd';
+      });
+    });
+  });
+});
+
+function simpanRating() {
+  const ratingStars = document.querySelectorAll('.rating-star');
+  let rating = 0;
+  ratingStars.forEach(star => {
+    if (star.style.color === '#ffc107') {
+      rating = star.getAttribute('data-value');
+    }
+  });
+  
+  const review = document.querySelector('.rating-section textarea').value;
+  
+  if (!rating) {
+    alert('Harap pilih rating!');
+    return;
+  }
+  
+  // Simpan ke localStorage
+  const reviews = JSON.parse(localStorage.getItem('reviews')) || [];
+  reviews.push({
+    transaction: 'BT-2026-001',
+    rating: rating,
+    review: review,
+    date: new Date().toISOString()
+  });
+  localStorage.setItem('reviews', JSON.stringify(reviews));
+  
+  alert('Rating dan ulasan berhasil disimpan!');
+  document.querySelector('.rating-section').style.display = 'none';
+}
+</script>
+
+
+
+</body>
+
+</html>
