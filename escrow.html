@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Escrow - YokBarter</title>
+  <style>
+    /* CSS sama seperti halaman lainnya */
+    :root {
+      --primary: #0f2a56;
+      --primary-light: #4a86e8;
+      --success: #28a745;
+      --danger: #dc3545;
+      --gray-100: #f8f9fa;
+      --white: #ffffff;
+    }
+    
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--gray-100);
+      margin: 0;
+      color: #333;
+    }
+    
+    .header-container {
+      background: linear-gradient(135deg, var(--primary), #0a1f3d);
+      color: white;
+      padding: 20px;
+    }
+    
+    .escrow-container {
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+    
+    .escrow-card {
+      background: white;
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      margin-bottom: 20px;
+    }
+    
+    .escrow-status {
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-weight: 600;
+      display: inline-block;
+      margin: 10px 0;
+    }
+    
+    .status-pending {
+      background: #fff3cd;
+      color: #856404;
+    }
+    
+    .status-locked {
+      background: #d1ecf1;
+      color: #0c5460;
+    }
+    
+    .status-completed {
+      background: #d4edda;
+      color: #155724;
+    }
+    
+    .btn {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+      margin: 5px;
+    }
+    
+    .btn-primary {
+      background: var(--primary-light);
+      color: white;
+    }
+    
+    .btn-success {
+      background: var(--success);
+      color: white;
+    }
+    
+    .btn-danger {
+      background: var(--danger);
+      color: white;
+    }
+  </style>
+</head>
+<body>
+
+<header class="header-container">
+  <h1>🔐 Escrow Protection</h1>
+</header>
+
+<div class="escrow-container">
+  <div class="escrow-card">
+    <h3>Transaksi #YT-001</h3>
+    <p><strong>Barang:</strong> iPhone 12 Pro ↔ MacBook Pro M1</p>
+    <p><strong>Nilai:</strong> Rp 8.000.000 ↔ Rp 15.000.000</p>
+    <p><strong>Selisih:</strong> Rp 7.000.000</p>
+    
+    <div class="escrow-status status-locked">Dana Terproteksi</div>
+    
+    <p><strong>Status:</strong> Menunggu konfirmasi kedua pihak</p>
+    
+    <div>
+      <button class="btn btn-success" onclick="confirmReceive('seller')">✅ Konfirmasi Kirim (Penjual)</button>
+      <button class="btn btn-success" onclick="confirmReceive('buyer')">📦 Konfirmasi Terima (Pembeli)</button>
+    </div>
+  </div>
+  
+  <div class="escrow-card">
+    <h3>🛡️ Sistem Proteksi YokBarter</h3>
+    <ul>
+      <li>Dana ditahan sampai kedua pihak konfirmasi</li>
+      <li>Admin bisa intervensi jika ada dispute</li>
+      <li>100% aman dari penipuan</li>
+    </ul>
+  </div>
+  
+  <div class="escrow-card">
+    <h3>🚨 Dispute Center</h3>
+    <p>Jika ada masalah dalam transaksi:</p>
+    <button class="btn btn-danger" onclick="openDispute()">Ajukan Komplain</button>
+  </div>
+</div>
+
+<script>
+function confirmReceive(role) {
+  if (role === 'seller') {
+    alert('✅ Anda telah mengkonfirmasi pengiriman barang!\nTunggu pembeli menerima barang.');
+  } else {
+    alert('📦 Anda telah mengkonfirmasi penerimaan barang!\nDana escrow akan dilepas ke penjual.');
+  }
+}
+
+function openDispute() {
+  const reason = prompt('Jelaskan masalah transaksi:');
+  if (reason) {
+    alert('🚨 Komplain berhasil diajukan!\nAdmin akan segera meninjau kasus Anda.');
+  }
+}
+</script>
+
+</body>
+</html>
