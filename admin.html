@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard Admin - YokBarter</title>
+  <style>
+    /* CSS sama seperti halaman lain */
+    :root {
+      --primary: #0f2a56;
+      --primary-light: #4a86e8;
+      --warning: #ffc107;
+      --danger: #dc3545;
+      --gray-100: #f8f9fa;
+      --white: #ffffff;
+    }
+    
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--gray-100);
+      margin: 0;
+      color: #333;
+    }
+    
+    .header-container {
+      background: linear-gradient(135deg, var(--primary), #0a1f3d);
+      color: white;
+      padding: 20px;
+    }
+    
+    .admin-container {
+      max-width: 1000px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+    
+    .admin-card {
+      background: white;
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      margin-bottom: 20px;
+    }
+    
+    .user-item, .product-item {
+      padding: 12px;
+      border-bottom: 1px solid #eee;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .btn {
+      padding: 6px 12px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 12px;
+      margin: 2px;
+    }
+    
+    .btn-warning {
+      background: var(--warning);
+      color: #212529;
+    }
+    
+    .btn-danger {
+      background: var(--danger);
+      color: white;
+    }
+    /* ========== MODAL DISPUTE ========== */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: white;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 600px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+
+.modal-header {
+  padding: 16px 24px;
+  border-bottom: 1px solid #eee;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal-body {
+  padding: 24px;
+}
+
+.modal-close {
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: #666;
+}
+
+.btn {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  margin: 4px;
+}
+
+.btn-success {
+  background: #28a745;
+  color: white;
+}
+
+.btn-danger {
+  background: #dc3545;
+  color: white;
+}
+  </style>
+</head>
+<body>
+
+<header class="header-container">
+  <h1>📊 Dashboard Admin</h1>
+</header>
+
+<div class="admin-container">
+  <div class="admin-card">
+    <h3>👥 Manajemen User</h3>
+    <div class="user-item">
+      <span>admin (Anda)</span>
+      <span>✅ Verified</span>
+    </div>
+    <div class="user-item">
+      <span>user123</span>
+      <button class="btn btn-warning">Verify</button>
+      <button class="btn btn-danger">Ban</button>
+    </div>
+  </div>
+  
+  <div class="admin-card">
+    <h3>🛍️ Moderasi Produk</h3>
+    <div class="product-item">
+      <span>iPhone 12 Pro - Jakarta</span>
+      <button class="btn btn-warning">Approve</button>
+      <button class="btn btn-danger">Remove</button>
+    </div>
+    <div class="product-item">
+      <span>Vespa Sprint - Bandung</span>
+      <button class="btn btn-warning">Approve</button>
+      <button class="btn btn-danger">Remove</button>
+    </div>
+  </div>
+  
+  <div class="admin-card">
+    <h3>🚨 Dispute yang Perlu Ditinjau</h3>
+    <div class="product-item">
+  <span>Transaksi #YT-001 - Komplain pengiriman</span>
+  <button class="btn btn-warning" onclick="openDisputeReview('YT-001')">Review</button>
+</div>
+  </div>
+</div>
+
+// Data dispute simulasi
+let disputes = [
+  {
+    id: "YT-001",
+    transactionId: "YT-001",
+    user: "user123",
+    reason: "Barang tidak sesuai deskripsi",
+    evidence: ["foto1.jpg", "foto2.jpg"],
+    status: "pending"
+  }
+];
+
+// Fungsi buka modal review
+function openDisputeReview(id) {
+  const dispute = disputes.find(d => d.id === id);
+  if (!dispute) return;
+
+  // Buat modal dinamis
+  const modalHTML = `
+    <div class="modal-overlay" onclick="closeModal()">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>🔍 Review Dispute #${id}</h3>
+          <button class="modal-close" onclick="closeModal()">×</button>
+        </div>
+        <div class="modal-body">
+          <div><strong>Pengguna:</strong> ${dispute.user}</div>
+          <div><strong>Alasan:</strong> ${dispute.reason}</div>
+          <div><strong>Bukti:</strong></div>
+          <div style="display:flex; gap:10px; margin:10px 0;">
+            <img src="img/produk1.png" alt="Bukti 1" style="width:80px; height:80px; object-fit:cover; border-radius:6px;">
+            <img src="img/produk2.png" alt="Bukti 2" style="width:80px; height:80px; object-fit:cover; border-radius:6px;">
+          </div>
+          
+          <div style="margin-top:20px;">
+            <strong>Keputusan:</strong>
+            <div style="margin-top:10px;">
+              <button class="btn btn-success" onclick="resolveDispute('${id}', 'approved')">✅ Setujui & Selesaikan</button>
+              <button class="btn btn-danger" onclick="resolveDispute('${id}', 'rejected')">❌ Tolak & Kembalikan Dana</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+
+  document.body.insertAdjacentHTML('beforeend', modalHTML);
+}
+
+// Tutup modal
+function closeModal() {
+  const modal = document.querySelector('.modal-overlay');
+  if (modal) modal.remove();
+}
+
+// Selesaikan dispute
+function resolveDispute(id, status) {
+  disputes = disputes.map(d => 
+    d.id === id ? {...d, status: status} : d
+  );
+  
+  closeModal();
+  
+  if (status === 'approved') {
+    alert(`✅ Dispute #${id} disetujui. Dana akan dilepas ke penjual.`);
+  } else {
+    alert(`❌ Dispute #${id} ditolak. Dana akan dikembalikan ke pembeli.`);
+  }
+}
+</body>
+</html>
